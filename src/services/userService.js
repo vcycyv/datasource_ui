@@ -6,16 +6,16 @@ export const userService = {
 
 function login(username, password) {
     const requestOptions = {
-        method: 'POST',
-        credentials: 'same-origin'
+        method: 'POST'
     };
 
     return fetch(config.get('apiUrl') + "auth?username=" + username + "&password=" + password, requestOptions)
         .then(handleResponse)
-        .then(user => {
-            localStorage.setItem('user', JSON.stringify(user));
+        .then(response => {
+            let token = response.data
+            localStorage.setItem('token', JSON.stringify(token));
 
-            return user;
+            return token;
         });
 }
 

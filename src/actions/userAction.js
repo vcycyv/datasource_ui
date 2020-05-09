@@ -11,8 +11,8 @@ export function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => { 
-                    dispatch(success(user));
+                token => { 
+                    dispatch(success(token));
                     history.push('/');
                 },
                 error => {
@@ -21,7 +21,7 @@ export function login(username, password) {
             );
     };
 
-    function request(user) { return { type: LOGIN_REQUEST, user } }
-    function success(user) { return { type: LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: LOGIN_FAILURE, error } }
+    function request(token) { return { type: LOGIN_REQUEST, token } }
+    function success(token) { return { type: LOGIN_SUCCESS, token } }
+    function failure(token) { return { type: LOGIN_FAILURE, token } }
 }
