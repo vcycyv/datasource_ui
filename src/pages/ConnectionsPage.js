@@ -23,9 +23,7 @@ const ConnectsPage = ({ dispatch, loading, connections, hasErrors }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {connections.map(connection => <Connection key={connection.id} data={connection} />)}
-                    </tr>
+                    {connections.map(connection => <Connection key={connection.id} data={connection} />)}
                 </tbody>
             </table>)
     }

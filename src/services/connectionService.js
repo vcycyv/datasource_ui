@@ -2,7 +2,8 @@ import config from 'react-global-configuration'
 import { authHeader } from '../helpers/authHeader';
 
 export const connectionService = {
-    getConnections
+    getConnections,
+    deleteConnection
 }
 
 function getConnections() {
@@ -12,6 +13,15 @@ function getConnections() {
     };
 
     return fetch(config.get('apiUrl') + 'connections', requestOptions).then(handleResponse);
+}
+
+function deleteConnection(id) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader()
+    };
+
+    return fetch(config.get('apiUrl') + 'connections/' + id, requestOptions).then(handleResponse)
 }
 
 function handleResponse(response) {

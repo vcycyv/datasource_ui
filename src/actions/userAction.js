@@ -13,7 +13,7 @@ export function login(username, password) {
             .then(
                 token => { 
                     dispatch(success(token));
-                    history.push('/');
+                    history.push('/connections');
                 },
                 error => {
                     dispatch(failure(error.toString()));
