@@ -3,6 +3,9 @@ import { authHeader } from '../helpers/authHeader';
 
 export const connectionService = {
     getConnections,
+    getConnection,
+    createConnection,
+    updateConnection,
     deleteConnection
 }
 
@@ -15,13 +18,45 @@ function getConnections() {
     return fetch(config.get('apiUrl') + 'connections', requestOptions).then(handleResponse);
 }
 
-function deleteConnection(id) {
+function getConnection(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(config.get('apiUrl') + 'connections/' + id, requestOptions).then(handleResponse);
+}
+
+async function createConnection(connection) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+        body: JSON.stringify(connection)
+    };
+
+    const response = await fetch(config.get('apiUrl') + 'connections', requestOptions);
+    return handleResponse(response);
+}
+
+async function updateConnection(connection) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+        body: JSON.stringify(connection)
+    };
+
+    const response = await fetch(config.get('apiUrl') + 'connections/' + connection.id, requestOptions);
+    return handleResponse(response);
+}
+
+async function deleteConnection(id) {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader()
     };
 
-    return fetch(config.get('apiUrl') + 'connections/' + id, requestOptions).then(handleResponse)
+    const response = await fetch(config.get('apiUrl') + 'connections/' + id, requestOptions);
+    return handleResponse(response);
 }
 
 function handleResponse(response) {

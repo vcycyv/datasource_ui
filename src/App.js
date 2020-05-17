@@ -15,6 +15,7 @@ const App = () => {
       <Switch>
         <PrivateRoute exact path="/connections" component={ConnectionsPage} />
         <PrivateRoute exact path="/connections/:id" component={ConnectionPage} />
+        <PrivateRoute exact path="/connections/new" component={ConnectionPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/dataList" component={DataListPage} />
         <Redirect from="*" to="/connections" />
