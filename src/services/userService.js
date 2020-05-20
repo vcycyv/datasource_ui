@@ -1,7 +1,9 @@
 import config from 'react-global-configuration'
+import { history } from '../helpers/history';
 
 export const userService = {
-    login
+    login,
+    logout,
 }
 
 function login(username, password) {
@@ -17,6 +19,11 @@ function login(username, password) {
 
             return token;
         });
+}
+
+function logout() {
+    localStorage.removeItem('token');
+    history.push('/login');
 }
 
 function handleResponse(response) {

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import config from 'react-global-configuration'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Local imports
 import App from './App'

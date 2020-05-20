@@ -104,7 +104,7 @@ class ConnectionPage extends Component {
                         onChange={this.handleChange.bind(this, 'DbName')} />
                 </div>
 
-                <button type="submit" className="btn btn-default">
+                <button type="submit" >
                     {this.state.connectionId? 'Update' : 'Create'} Connection
                 </button>
             </form>
