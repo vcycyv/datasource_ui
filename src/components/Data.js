@@ -2,7 +2,6 @@ import React from 'react'
 
 export const Data = ({ data }) => (
   <article className="data-excerpt">
-    <h2>{data.Name}</h2>
-    <p>{data.Type}</p>
+    <h2>{data}</h2>
   </article>
 )

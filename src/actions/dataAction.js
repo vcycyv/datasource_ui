@@ -1,3 +1,5 @@
+import { dataService } from '../services/dataService';
+
 export const GET_DATA_LIST = 'GET DATA LIST'
 export const GET_DATA_LIST_SUCCESS = 'GET_DATA_LIST_SUCCESS'
 export const GET_DATA_LIST_FAILURE = 'GET_DATA_LIST_FAILURE'
@@ -15,17 +17,18 @@ export const getDataListFailure = () => ({
     type: GET_DATA_LIST_FAILURE,
 })
 
-export function fetchDataList() {
+export function fetchDataList(id) {
     return async dispatch => {
       dispatch(getDataList())
   
-      try {
-        const response = await fetch('http://localhost:8000/datasource')
-        const data = await response.json()
-  
-        dispatch(getDataListSuccess(data))
-      } catch (error) {
-        dispatch(getDataListFailure())
-      }
+      dataService.getDataList(id)
+      .then(
+          data => { 
+              dispatch(getDataListSuccess(data));
+          },
+          error => {
+              dispatch(getDataListFailure());
+          }
+      );
     }
   }

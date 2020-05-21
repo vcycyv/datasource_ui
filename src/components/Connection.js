@@ -12,7 +12,8 @@ export const Connection = ({ data }) => {
             <td>{data.DbName}</td>
             <td>
                 <div>
-                    <Link to={`/connections/${data.id}`}>Edit</Link>
+                    <Link to={`/dataList?connectionId=${data.id}`}>Browse Tables</Link> {' '}
+                    <Link to={`/connections/${data.id}`}><span style={{paddingLeft: '20px'}}>Edit</span> </Link> {' '}
                     <button 
                         type="button" 
                         className="link-button" 

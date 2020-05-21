@@ -18,6 +18,7 @@ let App = ({ children }) => {
             <Navbar bg="light" expand="lg">
                 <Nav className="mr-auto">
                     <Nav.Link href="/connections">Connections</Nav.Link>
+                    <Nav.Link href="/dataList">Tables</Nav.Link>
                     <Nav.Link onClick={userService.logout}>Logout</Nav.Link>
                 </Nav>
             </Navbar>
