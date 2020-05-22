@@ -2,13 +2,14 @@ import React from 'react'
 import { Navbar, Nav} from 'react-bootstrap';
 import { Router, Switch, Route } from 'react-router-dom'
 
-import { PrivateRoute } from './components/PrivateRoute';
+import { PrivateRoute } from './components/privateRoute';
 import { history } from './helpers/history';
 
-import ConnectionsPage from './pages/ConnectionsPage'
-import ConnectionPage from './pages/ConnectionPage'
-import DataListPage from './pages/DataListPage'
-import LoginPage from './pages/LoginPage'
+import ConnectionsPage from './pages/connectionsPage'
+import ConnectionPage from './pages/connectionPage'
+import TableListPage from './pages/tableListPage'
+import TablePage from './pages/tablePage'
+import LoginPage from './pages/loginPage'
 import { userService } from './services/userService'
 
 
@@ -37,7 +38,8 @@ export default () => {
                 <App>
                     <PrivateRoute exact path="/connections" component={ConnectionsPage} />
                     <PrivateRoute exact path="/connections/:id" component={ConnectionPage} />
-                    <PrivateRoute exact path="/dataList" component={DataListPage} />
+                    <PrivateRoute exact path="/dataList" component={TableListPage} />
+                    <PrivateRoute exact path="/connections/:connectionId/dataList/:table" component={TablePage} />
                 </App>
             </Switch>
         </Router>

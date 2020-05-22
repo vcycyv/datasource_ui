@@ -8,7 +8,7 @@ import config from 'react-global-configuration'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Local imports
-import App from './App'
+import App from './app'
 import rootReducer from './reducers'
 
 // Assets

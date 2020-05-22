@@ -3,6 +3,7 @@ import { authHeader } from '../helpers/authHeader';
 
 export const dataService = {
     getDataList,
+    getData
 }
 
 function getDataList(id) {
@@ -12,6 +13,15 @@ function getDataList(id) {
     };
 
     return fetch(config.get('apiUrl') + 'connections/' + id + '/tables', requestOptions).then(handleResponse);
+}
+
+function getData(connectionId, table) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(config.get('apiUrl') + 'connections/' + connectionId + '/tables/' + table, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

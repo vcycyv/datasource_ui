@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
-import { Connection } from '../components/Connection'
+import { Connection } from '../components/connection'
 import { fetchConnections } from '../actions/connectionsAction'
 
 const ConnectsPage = ({ dispatch, loading, connections, hasErrors }) => {

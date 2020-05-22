@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 import { fetchDataList } from '../actions/dataAction'
-import { Data } from '../components/Data'
+import { Table } from '../components/table'
 
-class DataListPage extends Component {
+class TableListPage extends Component {
     constructor(props) {
         super(props)
         const search = props.location.search; 
@@ -24,7 +24,8 @@ class DataListPage extends Component {
     renderDataList() {
         if (this.props.loading) return <p>Loading data...</p>
         if (this.props.hasErrors) return <p>Unable to display data list.</p>
-        return this.props.dataList.map(data => <Data key={data} data={data} />)
+        console.log(this.state.connectionId)
+        return this.props.dataList.map(data => <Table key={data} data={data} connectionId={this.state.connectionId}/>)
     }
 
     render() {
@@ -47,4 +48,4 @@ const actionCreators = {
     fetchDataList,
 };
 
-export default connect(mapStateToProps, actionCreators)(DataListPage)
+export default connect(mapStateToProps, actionCreators)(TableListPage)

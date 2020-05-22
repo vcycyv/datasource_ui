@@ -14,6 +14,8 @@ export default function dataReducer(state = initialState, action) {
             return { ...state, dataList: action.payload, loading: false, hasErrors: false }
         case actions.GET_DATA_LIST_FAILURE:
             return { ...state, loading: false, hasErrors: true }
+        case actions.GET_DATA_SUCCESS:
+            return { ...state, data: action.payload, loading: false, hasErrors: false }
         default:
             return state
     }
