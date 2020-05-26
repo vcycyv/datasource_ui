@@ -1,5 +1,6 @@
 import config from 'react-global-configuration'
-import { authHeader } from '../helpers/authHeader';
+import { authHeader } from '../helpers/authHeader'
+import { userService } from './userService'
 
 export const connectionService = {
     getConnections,
@@ -65,8 +66,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                //logout();
-                //location.reload(true);
+                userService.logout();
             }
 
             const error = (data && data.message) || response.statusText;

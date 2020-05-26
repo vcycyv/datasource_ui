@@ -6,7 +6,7 @@ import authentication from './authenticationReducer'
 
 const rootReducer = combineReducers({
     connections: connectionsReducer,
-    dataList: dataReducer,
+    tableList: dataReducer,
     authentication: authentication
 })
 
