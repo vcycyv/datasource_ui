@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { fetchTableList } from '../actions/dataAction'
+import { fetchTableList, createDatasource } from '../actions/dataAction'
 import { TableEntry } from '../components/table'
 
 class TableListPage extends Component {
@@ -20,7 +20,12 @@ class TableListPage extends Component {
     }
 
     renderTableList() {
-        return Object.entries(this.props.tableList).map((data, i) => <TableEntry key={i} data={data} connectionId={this.state.connectionId}/>)
+        return Object.entries(this.props.tableList).map((data, i) => 
+            <TableEntry key={i} data={data} connectionId={this.state.connectionId} func={() => this.createDatasource(this.state.connectionId, data[0])}/>)
+    }
+
+    createDatasource(connectionId, table) {
+        this.props.createDatasource(connectionId, table)
     }
 
     render() {
@@ -52,6 +57,7 @@ const mapStateToProps = state => ({
 
 const actionCreators = {
     fetchTableList,
+    createDatasource,
 };
 
 export default connect(mapStateToProps, actionCreators)(TableListPage)

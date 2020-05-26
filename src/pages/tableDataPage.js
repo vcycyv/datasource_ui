@@ -14,12 +14,10 @@ class TableData extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount:" + this.state.connectionId)
         this.props.fetchTableData(this.state.connectionId, this.state.table)
     }
 
     render() {
-        console.log(this.props.data)
         if (typeof(this.props.data) == 'undefined')
             return ""
         let s = processData(JSON.stringify(this.props.data))

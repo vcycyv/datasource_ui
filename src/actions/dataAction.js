@@ -92,3 +92,17 @@ export function fetchDatasources() {
         );
       }
 }
+
+export function createDatasource(connectionId, table) {
+    return async dispatch => {
+        dataService.createDatasource(connectionId, table)
+        .then(
+            data => { 
+                dispatch(fetchTableList(connectionId))
+            },
+            error => {
+                dispatch(getTableListFailure());
+            }
+        );
+      }
+    }

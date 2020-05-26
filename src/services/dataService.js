@@ -6,6 +6,7 @@ export const dataService = {
     getTableList,
     getTableData,
     getDatasources,
+    createDatasource,
 }
 
 function getTableList(id) {
@@ -33,6 +34,15 @@ function getDatasources() {
     };
 
     return fetch(config.get('apiUrl') + 'datasource', requestOptions).then(handleResponse);
+}
+
+function createDatasource(connectionId, table) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+    };
+
+    return fetch(config.get('apiUrl') + 'connections/' + connectionId + '/tables/' + table + '/csv', requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
