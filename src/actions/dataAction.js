@@ -8,9 +8,14 @@ export const GET_TABLE_DATA = 'GET_TABLE_DATA'
 export const GET_TABLE_DATA_SUCCESS = 'GET_TABLE_DATA_SUCCESS'
 export const GET_TABLE_DATA_FAILURE = 'GET_TABLE_DATA_FAILURE'
 
-export const GET_DATASOURCES = 'GGET_DATASOURCES'
+export const GET_DATASOURCES = 'GET_DATASOURCES'
 export const GET_DATASOURCES_SUCCESS = 'GET_DATASOURCES_SUCCESS'
 export const GET_DATASOURCES_FAILURE = 'GET_DATASOURCES_FAILURE'
+
+export const GET_DATASOURCE_CONTENT = 'GET_DATASOURCE_CONTENT'
+export const GET_DATASOURCE_CONTENT_SUCCESS = 'GET_DATASOURCE_CONTENT_SUCCESS'
+export const GET_DATASOURCE_CONTENT_FAILURE = 'GET_DATASOURCE_CONTENT_FAILURE'
+
 
 export const getTableList = () => ({
     type: GET_TABLE_LIST,
@@ -45,6 +50,20 @@ export const getDatasourcesSuccess = (data) => ({
 
 export const getDatasourcesFailure = (data) => ({
     type: GET_DATASOURCES_FAILURE
+})
+
+
+export const getDatasourceContent = () => ({
+    type: GET_DATASOURCE_CONTENT,
+  })
+  
+export const getDatasourceContentSuccess = (data) => ({
+    type: GET_DATASOURCE_CONTENT_SUCCESS,
+    payload: data,
+})
+
+export const getDatasourceContentFailure = () => ({
+    type: GET_DATASOURCE_CONTENT_FAILURE,
 })
 
 export function fetchTableList(id) {
@@ -88,6 +107,20 @@ export function fetchDatasources() {
             },
             error => {
                 dispatch(getDatasourcesFailure());
+            }
+        );
+      }
+}
+
+export function fetchDatasourceContent(id) {
+    return async dispatch => {
+        dataService.getDatasourceContent(id)
+        .then(
+            data => { 
+                dispatch(getDatasourceContentSuccess(data));
+            },
+            error => {
+                dispatch(getDatasourceContentFailure());
             }
         );
       }

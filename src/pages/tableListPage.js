@@ -32,9 +32,7 @@ class TableListPage extends Component {
         if (this.props.loading) return <p>Loading data...</p>
         if (this.props.hasErrors) return <p>Unable to display data list.</p>
         return (
-            <section>
-                <h1>data list</h1>
-                <table>
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <td>Table Name</td><td>Status</td><td>Action</td>
@@ -44,7 +42,6 @@ class TableListPage extends Component {
                         {this.renderTableList()}
                     </tbody>
                 </table>
-            </section>
         )
     }
 }

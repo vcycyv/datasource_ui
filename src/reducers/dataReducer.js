@@ -3,6 +3,7 @@ import * as actions from '../actions/dataAction'
 export const initialState = {
     tableList: [],
     datasources: [],
+    datasourceContent: "",
     data: [],
     loading: false,
     hasErrors: false,
@@ -20,6 +21,8 @@ export default function dataReducer(state = initialState, action) {
             return { ...state, data: action.payload, loading: false, hasErrors: false }
         case actions.GET_DATASOURCES_SUCCESS:
             return { ...state, datasources: action.payload, loading: false, hasErrors: false }
+        case actions.GET_DATASOURCE_CONTENT_SUCCESS:
+            return { ...state, datasourceContent: action.payload, loading: false, hasErrors: false }
         default:
             return state
     }

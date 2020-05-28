@@ -6,6 +6,7 @@ export const dataService = {
     getTableList,
     getTableData,
     getDatasources,
+    getDatasourceContent,
     createDatasource,
 }
 
@@ -36,6 +37,15 @@ function getDatasources() {
     return fetch(config.get('apiUrl') + 'datasource', requestOptions).then(handleResponse);
 }
 
+function getDatasourceContent(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(config.get('apiUrl') + 'datasource/' + id + '/content', requestOptions).then(handleTextResponse);
+}
+
 function createDatasource(connectionId, table) {
     const requestOptions = {
         method: 'POST',
@@ -48,16 +58,27 @@ function createDatasource(connectionId, table) {
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                userService.logout();
-             }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
+        return handleResponseInternal(response, data);
     });
+}
+
+function handleTextResponse(response) {
+    return response.text().then(text => {
+        const data = text;
+        return handleResponseInternal(response, data);
+    });
+}
+
+function handleResponseInternal(response, data) {
+    if (!response.ok) {
+        if (response.status === 401) {
+            // auto logout if 401 response returned from api
+            userService.logout();
+         }
+
+        const error = (data && data.message) || response.statusText;
+        return Promise.reject(error);
+    }
+
+    return data
 }

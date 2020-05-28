@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { fetchDatasources } from '../actions/dataAction'
 
 class DatasourcesPage extends Component {
@@ -10,7 +11,7 @@ class DatasourcesPage extends Component {
     render() {
         return (
             <div>
-               {this.props.datasources.map((data, i) => <li key={i}>{data.Name}</li>)}
+               {this.props.datasources.map((data, i) => <li key={i}><Link to={`/datasources/${data.id}/content`}>{data.Name}</Link></li>)}
             </div>
         )
     }

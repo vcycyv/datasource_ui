@@ -10,6 +10,7 @@ import ConnectionPage from './pages/connectionPage'
 import TableListPage from './pages/tableListPage'
 import TableDataPage from './pages/tableDataPage'
 import DatasourcesPage from './pages/datasourcesPage'
+import DatasourceContentPage from './pages/datasourceContentPage'
 import LoginPage from './pages/loginPage'
 import { userService } from './services/userService'
 
@@ -42,6 +43,7 @@ export default () => {
                     <PrivateRoute exact path="/connections/:connectionId/tableList" component={TableListPage} />
                     <PrivateRoute exact path="/connections/:connectionId/tableList/:table/data" component={TableDataPage} />
                     <PrivateRoute exact path="/datasources" component={DatasourcesPage} />
+                    <PrivateRoute exact path="/datasources/:datasourceId/content" component={DatasourceContentPage} />
                 </App>
             </Switch>
         </Router>
