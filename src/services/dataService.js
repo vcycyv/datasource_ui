@@ -8,6 +8,8 @@ export const dataService = {
     getDatasources,
     getDatasourceContent,
     createDatasource,
+    uploadDatasource,
+    deleteDatasource,
 }
 
 function getTableList(id) {
@@ -53,6 +55,25 @@ function createDatasource(connectionId, table) {
     };
 
     return fetch(config.get('apiUrl') + 'connections/' + connectionId + '/tables/' + table + '/csv', requestOptions).then(handleResponse);
+}
+
+function uploadDatasource(formData) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: formData,
+    };
+
+    return fetch(config.get('apiUrl') + 'datasource', requestOptions).then(handleTextResponse); 
+}
+
+function deleteDatasource(id) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(config.get('apiUrl') + 'datasource/' + id, requestOptions).then(handleTextResponse);
 }
 
 function handleResponse(response) {

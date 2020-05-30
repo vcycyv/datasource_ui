@@ -137,5 +137,33 @@ export function createDatasource(connectionId, table) {
                 dispatch(getTableListFailure());
             }
         );
-      }
     }
+}
+
+export function uploadDatasource(formData) {
+    return async dispatch => {
+        dataService.uploadDatasource(formData)
+        .then(
+            data => { 
+                dispatch(fetchDatasources())
+            },
+            error => {
+                dispatch(getDatasourcesFailure());
+            }
+        );
+    }
+}
+
+export function deleteDatasource(id) {
+    return async dispatch => {
+        dataService.deleteDatasource(id)
+        .then(
+            data => {
+                dispatch(fetchDatasources())
+            },
+            error => {
+                dispatch(fetchDatasources())
+            }
+        )
+    }
+}

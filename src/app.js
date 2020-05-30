@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav} from 'react-bootstrap';
+import { Navbar, Nav, Container} from 'react-bootstrap';
 import { Router, Switch, Route } from 'react-router-dom'
 
 import { PrivateRoute } from './components/privateRoute';
@@ -17,7 +17,7 @@ import { userService } from './services/userService'
 
 let App = ({ children }) => {
     return (
-        <>
+        <Container>
             <Navbar bg="light" expand="lg">
                 <Nav className="mr-auto">
                     <Nav.Link href="/connections">Connections</Nav.Link>
@@ -28,7 +28,7 @@ let App = ({ children }) => {
             <div>
                 {children}
             </div>
-        </>
+        </Container>
     )
 }
 
