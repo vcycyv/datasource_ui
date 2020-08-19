@@ -16,6 +16,9 @@ export const GET_DATASOURCE_CONTENT = 'GET_DATASOURCE_CONTENT'
 export const GET_DATASOURCE_CONTENT_SUCCESS = 'GET_DATASOURCE_CONTENT_SUCCESS'
 export const GET_DATASOURCE_CONTENT_FAILURE = 'GET_DATASOURCE_CONTENT_FAILURE'
 
+export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS'
+export const GET_LIBRARIES_FAILURE = 'GET_LIBRARIES_FAILURE'
+
 
 export const getTableList = () => ({
     type: GET_TABLE_LIST,
@@ -52,7 +55,6 @@ export const getDatasourcesFailure = (data) => ({
     type: GET_DATASOURCES_FAILURE
 })
 
-
 export const getDatasourceContent = () => ({
     type: GET_DATASOURCE_CONTENT,
   })
@@ -64,6 +66,15 @@ export const getDatasourceContentSuccess = (data) => ({
 
 export const getDatasourceContentFailure = () => ({
     type: GET_DATASOURCE_CONTENT_FAILURE,
+})
+
+export const getLibrariesSuccess = (data) => ({
+    type: GET_LIBRARIES_SUCCESS,
+    payload: data
+})
+
+export const getLibrariesFailure = (data) => ({
+    type: GET_LIBRARIES_FAILURE
 })
 
 export function fetchTableList(id) {
@@ -126,9 +137,9 @@ export function fetchDatasourceContent(id) {
       }
 }
 
-export function createDatasource(connectionId, table) {
+export function createDatasource(connectionId, table, drawer) {
     return async dispatch => {
-        dataService.createDatasource(connectionId, table)
+        dataService.createDatasource(connectionId, table, drawer)
         .then(
             data => { 
                 dispatch(fetchTableList(connectionId))
@@ -159,10 +170,66 @@ export function deleteDatasource(id) {
         dataService.deleteDatasource(id)
         .then(
             data => {
-                dispatch(fetchDatasources())
+                dispatch(fetchDatasources(data))
             },
             error => {
                 dispatch(fetchDatasources())
+            }
+        )
+    }
+}
+
+export function fetchLibraries() {
+    return async dispatch => {
+        dataService.getLibraries()
+        .then(
+            data => { 
+                dispatch(getLibrariesSuccess(data))
+            },
+            error => {
+                dispatch(getLibrariesFailure())
+            }
+        );
+      }
+}
+
+export function createLibrary(name) {
+    return async dispatch => {
+        dataService.createLibrary(name)
+        .then(
+            data => { 
+                dispatch(fetchLibraries())
+            },
+            error => {
+                dispatch(getLibrariesFailure());
+            }
+        )
+    }
+}
+
+export function updateLibrary(library) {
+    return async dispatch => {
+        dataService.updateLibrary(library)
+        .then(
+            data => { 
+                dispatch(fetchLibraries())
+            },
+            error => {
+                dispatch(getLibrariesFailure());
+            }
+        )
+    }
+}
+
+export function deleteLibrary(id) {
+    return async dispatch => {
+        dataService.deleteLibrary(id)
+        .then(
+            data => { 
+                dispatch(fetchLibraries())
+            },
+            error => {
+                dispatch(getLibrariesFailure());
             }
         )
     }

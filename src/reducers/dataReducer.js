@@ -4,6 +4,7 @@ export const initialState = {
     tableList: [],
     datasources: [],
     datasourceContent: "",
+    libraries: [],
     data: [],
     loading: false,
     hasErrors: false,
@@ -23,6 +24,8 @@ export default function dataReducer(state = initialState, action) {
             return { ...state, datasources: action.payload, loading: false, hasErrors: false }
         case actions.GET_DATASOURCE_CONTENT_SUCCESS:
             return { ...state, datasourceContent: action.payload, loading: false, hasErrors: false }
+        case actions.GET_LIBRARIES_SUCCESS:
+            return { ...state, libraries: action.payload, loading: false, hasErrors: false}
         default:
             return state
     }

@@ -10,6 +10,10 @@ export const dataService = {
     createDatasource,
     uploadDatasource,
     deleteDatasource,
+    getLibraries,
+    createLibrary,
+    updateLibrary,
+    deleteLibrary,
 }
 
 function getTableList(id) {
@@ -36,7 +40,7 @@ function getDatasources() {
         headers: authHeader()
     };
 
-    return fetch(config.get('apiUrl') + 'datasource', requestOptions).then(handleResponse);
+    return fetch(config.get('apiUrl') + 'datasources', requestOptions).then(handleResponse);
 }
 
 function getDatasourceContent(id) {
@@ -45,13 +49,16 @@ function getDatasourceContent(id) {
         headers: authHeader()
     };
 
-    return fetch(config.get('apiUrl') + 'datasource/' + id + '/content', requestOptions).then(handleTextResponse);
+    return fetch(config.get('apiUrl') + 'datasources/' + id + '/content', requestOptions).then(handleTextResponse);
 }
 
-function createDatasource(connectionId, table) {
+function createDatasource(connectionId, table, drawer) {
+    console.debug("createDatasource : connectionId ->" + connectionId + " table -> " + table + " drawer -> " + drawer);
+    let datasetRequest = {'Drawer': drawer};
     const requestOptions = {
         method: 'POST',
-        headers: authHeader(),
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+        body: JSON.stringify(datasetRequest)
     };
 
     return fetch(config.get('apiUrl') + 'connections/' + connectionId + '/tables/' + table + '/csv', requestOptions).then(handleResponse);
@@ -64,7 +71,7 @@ function uploadDatasource(formData) {
         body: formData,
     };
 
-    return fetch(config.get('apiUrl') + 'datasource', requestOptions).then(handleTextResponse); 
+    return fetch(config.get('apiUrl') + 'datasources', requestOptions).then(handleTextResponse); 
 }
 
 function deleteDatasource(id) {
@@ -73,7 +80,45 @@ function deleteDatasource(id) {
         headers: authHeader(),
     };
 
-    return fetch(config.get('apiUrl') + 'datasource/' + id, requestOptions).then(handleTextResponse);
+    return fetch(config.get('apiUrl') + 'datasources/' + id, requestOptions).then(handleTextResponse);
+}
+
+function getLibraries() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(config.get('apiUrl') + 'libraries', requestOptions).then(handleResponse);
+}
+
+function createLibrary(name) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+        body: JSON.stringify({'Name': name})
+    };
+
+    return fetch(config.get('apiUrl') + 'libraries', requestOptions).then(handleResponse);
+}
+
+function updateLibrary(library) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+        body: JSON.stringify(library)
+    };
+
+    return fetch(config.get('apiUrl') + 'libraries/' + library.id, requestOptions).then(handleResponse);
+}
+
+function deleteLibrary(id) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(config.get('apiUrl') + 'libraries/' + id, requestOptions).then(handleTextResponse);
 }
 
 function handleResponse(response) {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { fetchDatasources, uploadDatasource, deleteDatasource } from '../actions/dataAction'
-import { Form, FormGroup, Row, Col, Container } from 'react-bootstrap';
+import { fetchDatasources, uploadDatasource, deleteDatasource, fetchLibraries, createLibrary } from '../actions/dataAction'
+import { Form, FormGroup, Row, Container } from 'react-bootstrap';
 
 class DatasourcesPage extends Component {
     constructor(props) {
@@ -14,7 +14,8 @@ class DatasourcesPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchDatasources()
+        this.props.fetchDatasources();
+        this.props.fetchLibraries();
     }
 
     handleSubmit(e) {
@@ -22,7 +23,7 @@ class DatasourcesPage extends Component {
 
         const formData = new FormData();
         formData.append("file", this.state.file);
-        this.props.uploadDatasource(formData)
+        this.props.uploadDatasource(formData);
     }
 
     render() {
@@ -48,6 +49,11 @@ class DatasourcesPage extends Component {
                         </tr>
                     </thead>
                     <tbody>
+                        {this.props.libraries.map((data, i) => 
+                            <tr key={i}>
+                                <td>{data.Name}</td>
+                            </tr>)
+                        }
                         {this.props.datasources.map((data, i) => 
                             <tr key={i}>
                                 <td><Link to={`/datasources/${data.id}/content`}>{data.Name}</Link></td>
@@ -70,12 +76,15 @@ class DatasourcesPage extends Component {
 
 const mapStateToProps = state => ({
     datasources: state.tableList.datasources,
+    libraries: state.tableList.libraries,
 })
 
 const actionCreators = {
     fetchDatasources,
     uploadDatasource,
     deleteDatasource,
+    fetchLibraries,
+    createLibrary
 };
 
 export default connect(mapStateToProps, actionCreators)(DatasourcesPage)

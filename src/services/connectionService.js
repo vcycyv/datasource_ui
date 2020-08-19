@@ -29,6 +29,7 @@ function getConnection(id) {
 }
 
 async function createConnection(connection) {
+    console.debug('service create connection:' + connection.Name);
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
