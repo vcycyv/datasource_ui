@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { fetchLibraries, createLibrary, updateLibrary, deleteLibrary } from '../actions/dataAction'
-import { Container, Modal, Button  } from 'react-bootstrap';
-import { confirmAlert } from 'react-confirm-alert'; 
+import { Container, Modal, Form, Col, Button } from 'react-bootstrap';
+import { confirmAlert } from 'react-confirm-alert';
 
 class DrawersPage extends Component {
     constructor(props) {
@@ -10,9 +10,11 @@ class DrawersPage extends Component {
         this.state = {
             'modalIsOpen': false,
             'drawer': {},
+            'drawerName': '',
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -27,16 +29,25 @@ class DrawersPage extends Component {
         this.setState(Object.assign({}, this.state, { 'modalIsOpen': false }))
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.createLibrary(this.state.drawerName);
+    }
+
     handleChange(id, e) {
         let drawer = this.props.libraries.find(d => { return d.id === id });
-        this.setState(Object.assign({}, this.state, {'drawer': Object.assign({}, drawer, { 'Name': e.target.value })}));
+        this.setState(Object.assign({}, this.state, { 'drawer': Object.assign({}, drawer, { 'Name': e.target.value }) }));
+    }
+
+    handleNewDrawerChange(e) {
+        this.setState(Object.assign({}, this.state, { 'drawerName': e.target.value }));
     }
 
     handleDrawerDeleteSubmit(drawer) {
         confirmAlert({
-            title: 'Delete',                        
-            message: 'Are you sure to delete this drawer?',      
-            buttons:[
+            title: 'Delete',
+            message: 'Are you sure to delete this drawer?',
+            buttons: [
                 {
                     label: 'OK',
                     onClick: () => this.props.deleteLibrary(drawer.id)
@@ -44,8 +55,8 @@ class DrawersPage extends Component {
                 {
                     label: 'Cancel'
                 }
-            ]        
-          })
+            ]
+        })
     }
 
     render() {
@@ -53,7 +64,7 @@ class DrawersPage extends Component {
             <Container>
                 <br />
                 <h2>Datasource</h2> <br />
-                <h3>Drawers</h3> <br />
+                <h3>Add a Drawer:</h3> <br />
                 <Modal show={this.state.modalIsOpen} onHide={this.closeModal} scrollable={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>Rename Drawer</Modal.Title>
@@ -63,15 +74,34 @@ class DrawersPage extends Component {
                         <input
                             className="form-control"
                             value={this.state.drawer.Name}
-                            onChange={this.handleChange.bind(this, this.state.drawer.id)} />                               
+                            onChange={this.handleChange.bind(this, this.state.drawer.id)} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeModal}>Close</Button>
-                        <Button variant="primary" onClick={() => { this.props.updateLibrary(this.state.drawer);this.closeModal(); }}>
+                        <Button variant="primary" onClick={() => { this.props.updateLibrary(this.state.drawer); this.closeModal(); }}>
                             Rename
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                <Form horizontal="true" name="form" className="form-horizontal" onSubmit={this.handleSubmit} style={{ backgroundColor: '#f8f9fa' }}>
+                    <Form.Row>
+                        <Col lg={1}>
+                            <Form.Label column sm="1"> drawer: </Form.Label>
+                        </Col>
+                        <Col>
+                            <input
+                                type="text"
+                                className="form-control"
+                                onChange={this.handleNewDrawerChange.bind(this)} />
+                        </Col>
+                        <Col>
+                            <input type="submit" value="Add" />
+                        </Col>
+                    </Form.Row>
+                </Form>
+                <hr />
+                <br />
+                <h3>Drawers:</h3> <br />
                 <table className="table table-hover">
                     <thead>
                         <tr>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Form, Container, Col, Button, Modal } from 'react-bootstrap';
 import DrawerSelect from '../components/drawerSelect';
 import { fetchLibraries, uploadDatasource, fetchDatasources, deleteDatasource, fetchDatasourceContent } from '../actions/dataAction';
@@ -46,6 +46,9 @@ class DatasetsPage extends Component {
     }
 
     render() {
+        if (this.props.libraries.length === 0) {
+            return <Container>loading drawers...</Container>;
+        }
         return (
             <Container>
                 <br />
@@ -105,6 +108,8 @@ class DatasetsPage extends Component {
                                         {data.Name}
                                     </button>
                                 </td>
+                                {console.debug("data.LibraryID: " + data.LibraryID)}
+                                {console.debug("libraries size: " + this.props.libraries.length)}
                                 <td>{this.props.libraries.find(d => d.id === data.LibraryID).Name}</td>
                                 <td>
                                     <button

@@ -10,6 +10,7 @@ export const dataService = {
     createDatasource,
     uploadDatasource,
     deleteDatasource,
+    getColumns,
     getLibraries,
     createLibrary,
     updateLibrary,
@@ -35,6 +36,7 @@ function getTableData(connectionId, table) {
 }
 
 function getDatasources() {
+    console.debug('get datasource in service')
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
@@ -83,13 +85,23 @@ function deleteDatasource(id) {
     return fetch(config.get('apiUrl') + 'datasources/' + id, requestOptions).then(handleTextResponse);
 }
 
-function getLibraries() {
+function getColumns(id) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
 
-    return fetch(config.get('apiUrl') + 'libraries', requestOptions).then(handleResponse);
+    return fetch(config.get('apiUrl') + 'datasources/' + id + '/columns', requestOptions).then(handleTextResponse);
+}
+
+function getLibraries(includeData) {
+    console.debug('data service get');
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+
+    return fetch(config.get('apiUrl') + 'libraries?includeData=' + includeData, requestOptions).then(handleResponse);
 }
 
 function createLibrary(name) {

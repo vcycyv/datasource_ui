@@ -1,23 +1,27 @@
 import { dataService } from '../services/dataService';
 
-export const GET_TABLE_LIST = 'GET_TABLE_LIST'
-export const GET_TABLE_LIST_SUCCESS = 'GET_TABLE_LIST_SUCCESS'
-export const GET_TABLE_LIST_FAILURE = 'GET_TABLE_LIST_FAILURE'
+export const GET_TABLE_LIST = 'GET_TABLE_LIST';
+export const GET_TABLE_LIST_SUCCESS = 'GET_TABLE_LIST_SUCCESS';
+export const GET_TABLE_LIST_FAILURE = 'GET_TABLE_LIST_FAILURE';
 
-export const GET_TABLE_DATA = 'GET_TABLE_DATA'
-export const GET_TABLE_DATA_SUCCESS = 'GET_TABLE_DATA_SUCCESS'
-export const GET_TABLE_DATA_FAILURE = 'GET_TABLE_DATA_FAILURE'
+export const GET_TABLE_DATA = 'GET_TABLE_DATA';
+export const GET_TABLE_DATA_SUCCESS = 'GET_TABLE_DATA_SUCCESS';
+export const GET_TABLE_DATA_FAILURE = 'GET_TABLE_DATA_FAILURE';
 
-export const GET_DATASOURCES = 'GET_DATASOURCES'
-export const GET_DATASOURCES_SUCCESS = 'GET_DATASOURCES_SUCCESS'
-export const GET_DATASOURCES_FAILURE = 'GET_DATASOURCES_FAILURE'
+export const GET_DATASOURCES = 'GET_DATASOURCES';
+export const GET_DATASOURCES_SUCCESS = 'GET_DATASOURCES_SUCCESS';
+export const GET_DATASOURCES_FAILURE = 'GET_DATASOURCES_FAILURE';
 
-export const GET_DATASOURCE_CONTENT = 'GET_DATASOURCE_CONTENT'
-export const GET_DATASOURCE_CONTENT_SUCCESS = 'GET_DATASOURCE_CONTENT_SUCCESS'
-export const GET_DATASOURCE_CONTENT_FAILURE = 'GET_DATASOURCE_CONTENT_FAILURE'
+export const GET_DATASOURCE_CONTENT = 'GET_DATASOURCE_CONTENT';
+export const GET_DATASOURCE_CONTENT_SUCCESS = 'GET_DATASOURCE_CONTENT_SUCCESS';
+export const GET_DATASOURCE_CONTENT_FAILURE = 'GET_DATASOURCE_CONTENT_FAILURE';
 
-export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS'
-export const GET_LIBRARIES_FAILURE = 'GET_LIBRARIES_FAILURE'
+export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS';
+export const GET_LIBRARIES_FAILURE = 'GET_LIBRARIES_FAILURE';
+
+export const GET_COLUMNS_SUCCESS = 'GET_COLUMNS_SUCCESS';
+export const GET_COLUMNS_FAILURE = 'GET_COLUMNS_FAILURE';
+
 
 
 export const getTableList = () => ({
@@ -77,6 +81,15 @@ export const getLibrariesFailure = (data) => ({
     type: GET_LIBRARIES_FAILURE
 })
 
+export const getColumnsSuccess = (data) => ({
+    type: GET_COLUMNS_SUCCESS,
+    payload: data
+}) 
+
+export const getColumnsFailure = () => ({
+    type: GET_COLUMNS_FAILURE
+}) 
+
 export function fetchTableList(id) {
     return async dispatch => {
       dispatch(getTableList())
@@ -120,7 +133,7 @@ export function fetchDatasources() {
                 dispatch(getDatasourcesFailure());
             }
         );
-      }
+    }
 }
 
 export function fetchDatasourceContent(id) {
@@ -179,15 +192,29 @@ export function deleteDatasource(id) {
     }
 }
 
-export function fetchLibraries() {
+export function fetchLibraries(includeData) {
     return async dispatch => {
-        dataService.getLibraries()
+        dataService.getLibraries(includeData)
         .then(
             data => { 
                 dispatch(getLibrariesSuccess(data))
             },
             error => {
                 dispatch(getLibrariesFailure())
+            }
+        );
+    }
+}
+
+export function getColumns(datasetID) {
+    return async dispatch => {
+        dataService.getColumns(datasetID)
+        .then(
+            data => { 
+                dispatch(getColumnsSuccess(data))
+            },
+            error => {
+                dispatch(getColumnsFailure())
             }
         );
       }
@@ -198,7 +225,7 @@ export function createLibrary(name) {
         dataService.createLibrary(name)
         .then(
             data => { 
-                dispatch(fetchLibraries())
+                dispatch(fetchLibraries(false))
             },
             error => {
                 dispatch(getLibrariesFailure());
@@ -212,7 +239,7 @@ export function updateLibrary(library) {
         dataService.updateLibrary(library)
         .then(
             data => { 
-                dispatch(fetchLibraries())
+                dispatch(fetchLibraries(false))
             },
             error => {
                 dispatch(getLibrariesFailure());
@@ -226,7 +253,7 @@ export function deleteLibrary(id) {
         dataService.deleteLibrary(id)
         .then(
             data => { 
-                dispatch(fetchLibraries())
+                dispatch(fetchLibraries(false))
             },
             error => {
                 dispatch(getLibrariesFailure());

@@ -8,9 +8,10 @@ import { history } from './helpers/history';
 import ConnectionsPage from './pages/connectionsPage';
 import DrawersPage from './pages/drawersPage';
 import DatasetsPage from './pages/datasetsPage';
-import DatasourcesPage from './pages/datasourcesPage';
-import DatasourceContentPage from './pages/datasourceContentPage';
+import ServersPage from './pages/serversPage';
 import LoginPage from './pages/loginPage';
+import ModelerPage from './pages/modelerPage'
+import ModelsPage from './pages/modelsPage'
 import { userService } from './services/userService';
 
 
@@ -23,6 +24,11 @@ let App = ({ children }) => {
                     <NavDropdown title="Datasource" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/drawers">Drawer</NavDropdown.Item>
                         <NavDropdown.Item href="/datasets">Dataset</NavDropdown.Item>
+                    </NavDropdown>
+                    <Nav.Link href="/servers">Servers</Nav.Link>
+                    <NavDropdown title="Models" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="/modeler">Build Models</NavDropdown.Item>
+                        <NavDropdown.Item href="/models">Model Management</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Link onClick={userService.logout}>Logout</Nav.Link>
                 </Nav>
@@ -43,9 +49,10 @@ export default () => {
                     <PrivateRoute exact path="/connections" component={ConnectionsPage} />
                     <PrivateRoute exact path="/drawers" component={DrawersPage} />
                     <PrivateRoute exact path="/datasets" component={DatasetsPage} />
-                    <PrivateRoute exact path="/datasources" component={DatasourcesPage} />
-                    <PrivateRoute exact path="/datasources/:datasourceId/content" component={DatasourceContentPage} />
-                </App>
+                    <PrivateRoute exact path="/servers" component={ServersPage} />
+                    <PrivateRoute exact path="/modeler" component={ModelerPage}/>
+                    <PrivateRoute exact path="/models" component={ModelsPage}/>
+                 </App>
             </Switch>
         </Router>
     )
