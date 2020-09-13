@@ -11,10 +11,10 @@ export const dataService = {
     uploadDatasource,
     deleteDatasource,
     getColumns,
-    getLibraries,
-    createLibrary,
-    updateLibrary,
-    deleteLibrary,
+    getDrawers,
+    createDrawer,
+    updateDrawer,
+    deleteDrawer,
 }
 
 function getTableList(id) {
@@ -94,43 +94,43 @@ function getColumns(id) {
     return fetch(config.get('apiUrl') + 'datasources/' + id + '/columns', requestOptions).then(handleTextResponse);
 }
 
-function getLibraries(includeData) {
+function getDrawers(includeData) {
     console.debug('data service get');
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
 
-    return fetch(config.get('apiUrl') + 'libraries?includeData=' + includeData, requestOptions).then(handleResponse);
+    return fetch(config.get('apiUrl') + 'drawers?includeData=' + includeData, requestOptions).then(handleResponse);
 }
 
-function createLibrary(name) {
+function createDrawer(name) {
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
         body: JSON.stringify({'Name': name})
     };
 
-    return fetch(config.get('apiUrl') + 'libraries', requestOptions).then(handleResponse);
+    return fetch(config.get('apiUrl') + 'drawers', requestOptions).then(handleResponse);
 }
 
-function updateLibrary(library) {
+function updateDrawer(drawer) {
     const requestOptions = {
         method: 'PUT',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify(library)
+        body: JSON.stringify(drawer)
     };
 
-    return fetch(config.get('apiUrl') + 'libraries/' + library.id, requestOptions).then(handleResponse);
+    return fetch(config.get('apiUrl') + 'drawers/' + drawer.id, requestOptions).then(handleResponse);
 }
 
-function deleteLibrary(id) {
+function deleteDrawer(id) {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader(),
     };
 
-    return fetch(config.get('apiUrl') + 'libraries/' + id, requestOptions).then(handleTextResponse);
+    return fetch(config.get('apiUrl') + 'drawers/' + id, requestOptions).then(handleTextResponse);
 }
 
 function handleResponse(response) {

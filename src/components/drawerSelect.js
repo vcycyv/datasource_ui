@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Select from 'react-select';
-import { fetchLibraries } from '../actions/dataAction';
+import { fetchDrawers } from '../actions/dataAction';
 
 class DrawerSelect extends Component {
     componentDidMount() {
-        this.props.fetchLibraries();
+        this.props.fetchDrawers();
     }
 
     render() {
         let drawerSelectOptions = [];
-        for (let i = 0; i < this.props.libraries.length; i++) {
-            console.debug('option: ' + this.props.libraries[i].Name);
+        for (let i = 0; i < this.props.drawers.length; i++) {
+            console.debug('option: ' + this.props.drawers[i].Name);
             var option = {};
-            option.value = this.props.libraries[i].id;
-            option.label = this.props.libraries[i].Name;
+            option.value = this.props.drawers[i].id;
+            option.label = this.props.drawers[i].Name;
             drawerSelectOptions.push(option);
         }
         console.debug('drawerSelectOptions: ' + drawerSelectOptions);
@@ -29,11 +29,11 @@ class DrawerSelect extends Component {
 }
 
 const mapStateToProps = state => ({
-    libraries: state.tableList.libraries,
+    drawers: state.tableList.drawers,
 })
 
 const actionCreators = {
-    fetchLibraries,
+    fetchDrawers,
 };
 
 export default connect(mapStateToProps, actionCreators)(DrawerSelect)

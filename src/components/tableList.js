@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 //import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap'
-import { fetchTableData, fetchLibraries } from '../actions/dataAction'
+import { fetchTableData, fetchDrawers } from '../actions/dataAction'
 import Select from 'react-select';
 
 class TableList extends Component {
@@ -33,7 +33,7 @@ class TableList extends Component {
     }
 
     openLibModal(connectionId, table) {
-        this.props.fetchLibraries();
+        this.props.fetchDrawers();
         //this.props.collectTable(connectionId, table);
         this.connectionId = connectionId;
         this.table = table;
@@ -65,13 +65,13 @@ class TableList extends Component {
             </tr>
         );
 
-        console.debug('drawers length: ' + this.props.libraries.length);
+        console.debug('drawers length: ' + this.props.drawers.length);
         let drawerSelectOptions = [];
-        for(let i = 0; i < this.props.libraries.length; i++) {
-            console.debug('option: ' + this.props.libraries[i].Name);
+        for(let i = 0; i < this.props.drawers.length; i++) {
+            console.debug('option: ' + this.props.drawers[i].Name);
             var option = {};
-            option.value = this.props.libraries[i].id;
-            option.label = this.props.libraries[i].Name;
+            option.value = this.props.drawers[i].id;
+            option.label = this.props.drawers[i].Name;
             drawerSelectOptions.push(option);
         }
         console.debug('drawerSelectOptions: ' + drawerSelectOptions);
@@ -157,12 +157,12 @@ class TableList extends Component {
 const mapStateToProps = state => ({
     loading: state.tableList.loading,
     data: state.tableList.data,
-    libraries: state.tableList.libraries,
+    drawers: state.tableList.drawers,
 })
 
 const actionCreators = {
     fetchTableData,
-    fetchLibraries,
+    fetchDrawers,
 };
 
 export default connect(mapStateToProps, actionCreators)(TableList)

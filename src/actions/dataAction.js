@@ -16,8 +16,8 @@ export const GET_DATASOURCE_CONTENT = 'GET_DATASOURCE_CONTENT';
 export const GET_DATASOURCE_CONTENT_SUCCESS = 'GET_DATASOURCE_CONTENT_SUCCESS';
 export const GET_DATASOURCE_CONTENT_FAILURE = 'GET_DATASOURCE_CONTENT_FAILURE';
 
-export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS';
-export const GET_LIBRARIES_FAILURE = 'GET_LIBRARIES_FAILURE';
+export const GET_DRAWERS_SUCCESS = 'GET_DRAWERS_SUCCESS';
+export const GET_DRAWERS_FAILURE = 'GET_DRAWERS_FAILURE';
 
 export const GET_COLUMNS_SUCCESS = 'GET_COLUMNS_SUCCESS';
 export const GET_COLUMNS_FAILURE = 'GET_COLUMNS_FAILURE';
@@ -72,13 +72,13 @@ export const getDatasourceContentFailure = () => ({
     type: GET_DATASOURCE_CONTENT_FAILURE,
 })
 
-export const getLibrariesSuccess = (data) => ({
-    type: GET_LIBRARIES_SUCCESS,
+export const getDrawersSuccess = (data) => ({
+    type: GET_DRAWERS_SUCCESS,
     payload: data
 })
 
-export const getLibrariesFailure = (data) => ({
-    type: GET_LIBRARIES_FAILURE
+export const getDrawersFailure = (data) => ({
+    type: GET_DRAWERS_FAILURE
 })
 
 export const getColumnsSuccess = (data) => ({
@@ -192,15 +192,15 @@ export function deleteDatasource(id) {
     }
 }
 
-export function fetchLibraries(includeData) {
+export function fetchDrawers(includeData) {
     return async dispatch => {
-        dataService.getLibraries(includeData)
+        dataService.getDrawers(includeData)
         .then(
             data => { 
-                dispatch(getLibrariesSuccess(data))
+                dispatch(getDrawersSuccess(data))
             },
             error => {
-                dispatch(getLibrariesFailure())
+                dispatch(getDrawersFailure())
             }
         );
     }
@@ -220,43 +220,43 @@ export function getColumns(datasetID) {
       }
 }
 
-export function createLibrary(name) {
+export function createDrawer(name) {
     return async dispatch => {
-        dataService.createLibrary(name)
+        dataService.createDrawer(name)
         .then(
             data => { 
-                dispatch(fetchLibraries(false))
+                dispatch(fetchDrawers(false))
             },
             error => {
-                dispatch(getLibrariesFailure());
+                dispatch(getDrawersFailure());
             }
         )
     }
 }
 
-export function updateLibrary(library) {
+export function updateDrawer(drawer) {
     return async dispatch => {
-        dataService.updateLibrary(library)
+        dataService.updateDrawer(drawer)
         .then(
             data => { 
-                dispatch(fetchLibraries(false))
+                dispatch(fetchDrawers(false))
             },
             error => {
-                dispatch(getLibrariesFailure());
+                dispatch(getDrawersFailure());
             }
         )
     }
 }
 
-export function deleteLibrary(id) {
+export function deleteDrawer(id) {
     return async dispatch => {
-        dataService.deleteLibrary(id)
+        dataService.deleteDrawer(id)
         .then(
             data => { 
-                dispatch(fetchLibraries(false))
+                dispatch(fetchDrawers(false))
             },
             error => {
-                dispatch(getLibrariesFailure());
+                dispatch(getDrawersFailure());
             }
         )
     }

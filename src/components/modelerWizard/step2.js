@@ -18,10 +18,10 @@ class Step2 extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { libraries, columns } = this.props
-        if (prevProps.libraries !== libraries) {
-            console.log('in componentDidUpdate libraries');
-            this.setState(Object.assign({}, this.state, { 'libraries': this.getLibrariesWithData(libraries) }));
+        const { drawers, columns } = this.props
+        if (prevProps.drawers !== drawers) {
+            console.log('in componentDidUpdate drawers');
+            this.setState(Object.assign({}, this.state, { 'drawers': this.getDrawersWithData(drawers) }));
         }
         if (prevProps.columns !== columns) {
             console.log('in componentDidUpdate columns');
@@ -36,26 +36,26 @@ class Step2 extends Component {
         }
     }
 
-    getLibrariesWithData() {
+    getDrawersWithData() {
         let rtnVal = []
-        console.log(this.props.libraries.length)
-        for (let i = 0; i < this.props.libraries.length; i++) {
+        console.log(this.props.drawers.length)
+        for (let i = 0; i < this.props.drawers.length; i++) {
             let rtnLib = {}
-            let libID = this.props.libraries[i].id;
+            let drawerID = this.props.drawers[i].id;
             let libDatasets = [];
-            if (typeof this.props.libraries[i].Dataset != "undefined") {
-                for (let j = 0; j < this.props.libraries[i].Dataset.length; j++) {
-                    if (this.props.libraries[i].Dataset[j].LibraryID === libID) {
+            if (typeof this.props.drawers[i].Dataset != "undefined") {
+                for (let j = 0; j < this.props.drawers[i].Dataset.length; j++) {
+                    if (this.props.drawers[i].Dataset[j].DrawerID === drawerID) {
                         let rtnData = {};
-                        rtnData.id = this.props.libraries[i].Dataset[j].id;
-                        rtnData.name = this.props.libraries[i].Dataset[j].Name;
+                        rtnData.id = this.props.drawers[i].Dataset[j].id;
+                        rtnData.name = this.props.drawers[i].Dataset[j].Name;
                         rtnData.type = "dataset"
                         libDatasets.push(rtnData);
                     }
                 }
             }
-            rtnLib.id = libID
-            rtnLib.name = this.props.libraries[i].Name
+            rtnLib.id = drawerID
+            rtnLib.name = this.props.drawers[i].Name
             rtnLib.type = "drawer"
             rtnLib.children = libDatasets;
             rtnVal.push(rtnLib);
@@ -142,7 +142,7 @@ class Step2 extends Component {
     }
 
     render() {
-        if (typeof this.state.libraries == 'undefined') {
+        if (typeof this.state.drawers == 'undefined') {
             return <Container></Container>
         }
 
@@ -192,7 +192,7 @@ class Step2 extends Component {
                 <Row>
                     <Col>
                         Datasource: <br /><br />
-                        <Treebeard data={this.state.libraries}
+                        <Treebeard data={this.state.drawers}
                             onToggle={this.onToggle}
                             style={{
                                 tree: {

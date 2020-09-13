@@ -5,7 +5,7 @@ export const initialState = {
     datasources: [],
     datasourceContent: "",
     columns: '',
-    libraries: [],
+    drawers: [],
     data: [],
     loading: false,
     hasErrors: false,
@@ -27,8 +27,8 @@ export default function dataReducer(state = initialState, action) {
             return { ...state, datasourceContent: action.payload, loading: false, hasErrors: false }
         case actions.GET_COLUMNS_SUCCESS:
             return { ...state, columns: action.payload, loading: false, hasErrors: false }
-        case actions.GET_LIBRARIES_SUCCESS:
-            return { ...state, libraries: action.payload, loading: false, hasErrors: false }
+        case actions.GET_DRAWERS_SUCCESS:
+            return { ...state, drawers: action.payload, loading: false, hasErrors: false }
         default:
             return state
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchLibraries, createLibrary, updateLibrary, deleteLibrary } from '../actions/dataAction'
+import { fetchDrawers, createDrawer, updateDrawer, deleteDrawer } from '../actions/dataAction'
 import { Container, Modal, Form, Col, Button } from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 
@@ -18,7 +18,7 @@ class DrawersPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchLibraries();
+        this.props.fetchDrawers();
     }
 
     openModal(drawer) {
@@ -31,11 +31,11 @@ class DrawersPage extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.createLibrary(this.state.drawerName);
+        this.props.createDrawer(this.state.drawerName);
     }
 
     handleChange(id, e) {
-        let drawer = this.props.libraries.find(d => { return d.id === id });
+        let drawer = this.props.drawers.find(d => { return d.id === id });
         this.setState(Object.assign({}, this.state, { 'drawer': Object.assign({}, drawer, { 'Name': e.target.value }) }));
     }
 
@@ -50,7 +50,7 @@ class DrawersPage extends Component {
             buttons: [
                 {
                     label: 'OK',
-                    onClick: () => this.props.deleteLibrary(drawer.id)
+                    onClick: () => this.props.deleteDrawer(drawer.id)
                 },
                 {
                     label: 'Cancel'
@@ -78,7 +78,7 @@ class DrawersPage extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeModal}>Close</Button>
-                        <Button variant="primary" onClick={() => { this.props.updateLibrary(this.state.drawer); this.closeModal(); }}>
+                        <Button variant="primary" onClick={() => { this.props.updateDrawer(this.state.drawer); this.closeModal(); }}>
                             Rename
                         </Button>
                     </Modal.Footer>
@@ -105,13 +105,14 @@ class DrawersPage extends Component {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <td>Drawer Name</td><td>Action</td>
+                            <td>Drawer Name</td><td>Created By</td><td>Action</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.libraries.map((data, i) =>
+                        {this.props.drawers.map((data, i) =>
                             <tr key={i}>
                                 <td>{data.Name}</td>
+                                <td>{data.User}</td>
                                 <td>
                                     <button
                                         type="button"
@@ -136,14 +137,14 @@ class DrawersPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    libraries: state.tableList.libraries,
+    drawers: state.tableList.drawers,
 })
 
 const actionCreators = {
-    fetchLibraries,
-    createLibrary,
-    updateLibrary,
-    deleteLibrary,
+    fetchDrawers,
+    createDrawer,
+    updateDrawer,
+    deleteDrawer,
 };
 
 export default connect(mapStateToProps, actionCreators)(DrawersPage)

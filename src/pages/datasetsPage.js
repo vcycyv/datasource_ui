@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Container, Col, Button, Modal } from 'react-bootstrap';
 import DrawerSelect from '../components/drawerSelect';
-import { fetchLibraries, uploadDatasource, fetchDatasources, deleteDatasource, fetchDatasourceContent } from '../actions/dataAction';
+import { fetchDrawers, uploadDatasource, fetchDatasources, deleteDatasource, fetchDatasourceContent } from '../actions/dataAction';
 
 class DatasetsPage extends Component {
 
@@ -19,7 +19,7 @@ class DatasetsPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchLibraries();
+        this.props.fetchDrawers();
         this.props.fetchDatasources();
     }
 
@@ -32,7 +32,7 @@ class DatasetsPage extends Component {
 
         const formData = new FormData();
         formData.append("file", this.state.file);
-        formData.append("libraryID", this.drawerID);
+        formData.append("drawerID", this.drawerID);
         this.props.uploadDatasource(formData);
     }
 
@@ -46,7 +46,7 @@ class DatasetsPage extends Component {
     }
 
     render() {
-        if (this.props.libraries.length === 0) {
+        if (this.props.drawers.length === 0) {
             return <Container>loading drawers...</Container>;
         }
         return (
@@ -108,9 +108,8 @@ class DatasetsPage extends Component {
                                         {data.Name}
                                     </button>
                                 </td>
-                                {console.debug("data.LibraryID: " + data.LibraryID)}
-                                {console.debug("libraries size: " + this.props.libraries.length)}
-                                <td>{this.props.libraries.find(d => d.id === data.LibraryID).Name}</td>
+                                {console.debug("drawerID: " + data.DrawerID)}
+                                <td>{this.props.drawers.find(d => d.id === data.DrawerID).Name}</td>
                                 <td>
                                     <button
                                         type="button"
@@ -130,12 +129,12 @@ class DatasetsPage extends Component {
 
 const mapStateToProps = state => ({
     datasources: state.tableList.datasources,
-    libraries: state.tableList.libraries,
+    drawers: state.tableList.drawers,
     datasourceContent: state.tableList.datasourceContent,
 })
 
 const actionCreators = {
-    fetchLibraries,
+    fetchDrawers,
     uploadDatasource,
     fetchDatasources,
     deleteDatasource,

@@ -4,7 +4,7 @@ import StepWizard from 'react-step-wizard';
 import { Container } from 'react-bootstrap';
 import Step1 from '../components/modelerWizard/step1'
 import Step2 from '../components/modelerWizard/step2'
-import { fetchLibraries } from '../actions/dataAction'
+import { fetchDrawers } from '../actions/dataAction'
 
 class ModelerPage extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class ModelerPage extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchLibraries(true);
+        this.props.fetchDrawers(true);
     }
 
     getEmptyModel() {
@@ -39,7 +39,7 @@ class ModelerPage extends Component {
                 <div style={{ backgroundColor: '#f8f9fa' }}>
                 <StepWizard>
                     <Step1 populate={this.handleNewModelChange} />
-                    <Step2 libraries={this.props.libraries} model={this.state.model}/>
+                    <Step2 drawers={this.props.drawers} model={this.state.model}/>
                 </StepWizard>
                 </div>
             </Container>
@@ -48,11 +48,11 @@ class ModelerPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    libraries: state.tableList.libraries,
+    drawers: state.tableList.drawers,
 })
 
 const actionCreators = {
-    fetchLibraries,
+    fetchDrawers,
 };
 
 export default connect(mapStateToProps, actionCreators)(ModelerPage)
