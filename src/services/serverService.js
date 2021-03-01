@@ -18,11 +18,11 @@ function getServers() {
     return fetch(config.get('apiUrl') + 'servers', requestOptions).then(handleResponse);
 }
 
-function addServer(name, url) {
+function addServer(server) {
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify({'Name': name, 'Url': url})
+        body: JSON.stringify(server)
     };
 
     return fetch(config.get('apiUrl') + 'servers', requestOptions).then(handleResponse);

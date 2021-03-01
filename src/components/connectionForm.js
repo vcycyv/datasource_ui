@@ -4,9 +4,10 @@ export default class ConnectionForm extends Component {
     constructor(props) {
         super(props)
         
+        console.log('entering ConnectionForm constructor ' + props.action)
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+
         if (typeof props.data == "undefined" ) {
             //console.debug('props data is undefined')
             this.state = {'id':'','Type':'', 'Name':'','Host':'','User':'','Password':'','DbName':''}
@@ -17,12 +18,12 @@ export default class ConnectionForm extends Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        //console.debug('props: ' + this.props.data.Name)
-        //console.debug('prevState.id:' + prevState.id);
-        //console.debug('state.id:' + this.state.id);
-        if ( (this.props.action === 'update' && this.props.data.id === '') || prevProps.data.id !== this.props.data.id) {
-            this.setState(this.props.data)
-        }
+        console.log('props: ' + this.props.data.id)
+        console.log('prevProps: ' + prevProps.data.id)
+        console.log('this.props.action: ' + this.props.action)
+        if ( this.props.action === 'update' && prevProps.data.id !== this.props.data.id) {
+                this.setState(this.props.data)
+         }
     }
 
     handleChange(field, e) {

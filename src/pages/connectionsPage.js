@@ -44,7 +44,11 @@ class ConnectionPage extends Component {
             console.debug('connections is not undefined')
             if(JSON.stringify(prevProps.connections ) !== JSON.stringify(this.props.connections)){
                 if(this.props.connections.length < prevProps.connections.length){
-                    this.setState(Object.assign({}, this.state, { 'connection': this.props.connections[0], 'selectedConnection': 0 }));
+                    if(this.props.connections.length === 0){
+                        this.setState(Object.assign({}, this.state, { 'connection': this.getEmptyConnection(), 'selectedConnection': 0 }));
+                    }else{
+                        this.setState(Object.assign({}, this.state, { 'connection': this.props.connections[0], 'selectedConnection': 0 }));
+                    }
                 }else /*if(this.props.connections.length > prevProps.connections.length)*/{
                     let sortedConnections = this.props.connections.sort((a,b) => new Date(a.UpdatedAt) - new Date(b.UpdatedAt));
                     console.debug('sorted connection: ' + sortedConnections[this.props.connections.length - 1].UpdatedAt);
